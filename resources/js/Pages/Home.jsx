@@ -49,7 +49,9 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
 
                 {/* Liste des tâches */}
                 <div className="border">
-                    {TachesAffichees().map(tache => (
+                    
+                {TachesAffichees().length > 0 ? (
+                    TachesAffichees().map(tache => (
                         <div key={tache.id} className="d-flex gap-3">
                             <input type="checkbox"
                             name=""
@@ -58,22 +60,9 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
                             onChange={() => handleCheckboxChange(tache.id, tache.checked === 1)} 
                             />
                             <p>{tache.nom}</p>
-                            {/* affichage des filtres - temporaire */}
-                                                       <div>
-                                <strong>Filtres: </strong>
-                                {tache.filtres && tache.filtres.length > 0 ? (
-                                    tache.filtres.map((filtre, index) => (
-                                        <span key={filtre.id}>
-                                            {filtre.nom}
-                                            {index < tache.filtres.length - 1 ? ', ' : ''}
-                                        </span>
-                                    ))
-                                ) : (
-                                    <span>Aucun filtre</span>
-                                )}
-                            </div>
                         </div>
-                    ))}
+                    ))) : "Pas de tâche(s)"
+                }
 
                     {/* Affichage nombre de tâches qui ne sont pas encore checked (checked == 0)  */}
 
