@@ -8,7 +8,7 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
     // par défaut on affiche tout
 
     // vu sur Claude:
-       const handleCheckboxChange = (tacheId, isCurrentlyChecked) => {
+    const handleCheckboxChange = (tacheId, isCurrentlyChecked) => {
         // envoyer les infos dans le backend
         router.put(`/tache/update/${tacheId}`, {
             checked: !isCurrentlyChecked,
@@ -61,20 +61,32 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
                             />
                             <p>{tache.nom}</p>
                         </div>
-                    ))) : "Pas de tâche(s)"
+                    ))) : "Pas de tâches à afficher."
                 }
 
+                <div className="d-flex gap-3">
                     {/* Affichage nombre de tâches qui ne sont pas encore checked (checked == 0)  */}
 
-                    <p>{taches_not_done.length}</p>
+                    <p>{taches_not_done.length} tâches à encore effectuer.</p>
 
                     {/* Filtres */}
-                    {/* Input radio -> si un des liens est 'checked', alors il y aura un mapping spécifique. */}
-                    <button onClick={() => setFiltreActif('toutes')}>Toutes</button>
-                    <button onClick={() => setFiltreActif('actives')}>Actives</button>
-                    <button onClick={() => setFiltreActif('terminées')}>Terminées</button>
+                    <div>
+                        <button onClick={() => setFiltreActif('toutes')}>Toutes</button>
+                        <button onClick={() => setFiltreActif('actives')}>Actives</button>
+                        <button onClick={() => setFiltreActif('terminées')}>Terminées</button>
+                    </div>
 
-                    {/* Remettre toutes les tâches à checked == 0 */}
+                    {/* Suppriemr toutes les tâches dont checked == 1 */}
+                    <div>
+                        <form action="tache/destroy" method="POST">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <input type="hidden" name="_token" value={csrf_token} />
+                            <button type="submit">Clear les tâches terminées</button>
+                        </form>
+                    </div>
+
+                </div>    
+
                 </div>
 
 

@@ -73,4 +73,11 @@ class TacheController extends Controller
 
         return redirect("/")->with('success', 'Tâche modifiée avec succès !');
     }
+
+    // Pour update le checked de toutes les tâches en même temps:
+    public function destroy() {
+        Tache::where('checked', 1)->delete();
+
+        return redirect("/")->with('success', 'Tâches supprimées avec succès !');
+    }
 }

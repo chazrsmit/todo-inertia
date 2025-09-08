@@ -10,3 +10,4 @@ Route::get('/', [TacheController::class, 'index'])->name('home');
 
 Route::post('tache/add', [TacheController::class, 'store'])->name('add');
 Route::put('tache/update/{id}', [TacheController::class, 'update'])->name('update');
+Route::delete('tache/destroy', [TacheController::class, 'destroy']);
