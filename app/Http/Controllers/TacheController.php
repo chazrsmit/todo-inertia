@@ -11,8 +11,11 @@ class TacheController extends Controller
     public function index() {
         // On affiche les tâches avec leurs filtres associés grâce à la fonction with()
         $taches = Tache::with('filtres')->get();
+        // on récupère les tâches pas encore finies
+        $taches_not_done = Tache::where('checked', 0)->get();
         return Inertia::render('Home', [
             'taches' => $taches,
+            'taches_not_done' => $taches_not_done,
             'csrf_token' => csrf_token()
         ]);
     }

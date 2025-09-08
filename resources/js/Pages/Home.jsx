@@ -1,6 +1,6 @@
 import { router } from "@inertiajs/react";
 
-export default function Home({ taches, csrf_token }){
+export default function Home({ taches, taches_not_done, csrf_token }){
 
     // vu sur Claude:
        const handleCheckboxChange = (tacheId, isCurrentlyChecked) => {
@@ -39,7 +39,7 @@ export default function Home({ taches, csrf_token }){
                             onChange={() => handleCheckboxChange(tache.id, tache.checked === 1)} 
                             />
                             <p>{tache.nom}</p>
-                            {/* affichage des filtres */}
+                            {/* affichage des filtres - temporaire */}
                                                        <div>
                                 <strong>Filtres: </strong>
                                 {tache.filtres && tache.filtres.length > 0 ? (
@@ -55,6 +55,13 @@ export default function Home({ taches, csrf_token }){
                             </div>
                         </div>
                     ))}
+                    {/* Comptage nombre de tâches qui ne sont pas encore checked (checked == 0)  */}
+
+                    
+
+                    {/* Filtres */}
+
+                    {/* Remettre toutes les tâches à checked == 0 */}
                 </div>
 
 
