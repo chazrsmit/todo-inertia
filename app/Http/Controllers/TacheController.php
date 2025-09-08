@@ -31,8 +31,9 @@ class TacheController extends Controller
 
         $tache->nom = $request->nom;
         // comme il y a une checkbox, il faut mettre cette ligne 
-        // unchecked = 0 (active) ; checked = 1 (terminée)
         $tache->checked =$request->boolean('checked');
+        // checked : "true"  -> 1 (tâche terminée)
+        // unchecked : "false" -> 0 (tâche active)
 
         // on sauve la tâche avant d'établir la relation many 2 many (car la fonction attach a besoin de l'id de la tâche)
         $tache->save();

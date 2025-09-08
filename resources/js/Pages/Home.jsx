@@ -12,6 +12,9 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
         // envoyer les infos dans le backend
         router.put(`/tache/update/${tacheId}`, {
             checked: !isCurrentlyChecked,
+            // cette ligne ci-dessus dis que le checked va prendre l'INVERSE de l'état initial de la checkbox;
+            // si la box n'était pas checked de base, on envoit un false, ce qui done : checked: !false = true
+            // la tâche devient donc tache.checked === 1
             _token: csrf_token
         });
     };
@@ -58,6 +61,7 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
                             id=""
                             checked={tache.checked === 1}
                             onChange={() => handleCheckboxChange(tache.id, tache.checked === 1)} 
+                            // on envoit dans la fonction l'id de la tâche, ainsi qu'un true ou false (si de base c'était pas checked, on va envoyer un false; l'inverse si c'était dejà checked)
                             />
                             <p>{tache.nom}</p>
                         </div>
