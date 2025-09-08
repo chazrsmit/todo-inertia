@@ -17,6 +17,7 @@
     "dependencies": {
         "@inertiajs/react": "^2.1.5",
         "@vitejs/plugin-react": "^5.0.2",
+        "bootstrap": "^5.3.8",
         "react-dom": "^19.1.1",
         "ziggy-js": "github:tightenco/ziggy"
     }
