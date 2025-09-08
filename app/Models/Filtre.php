@@ -10,6 +10,6 @@ class Filtre extends Model
 
     // Un filtre peut être attribué à plusieurs tâches
     public function taches() {
-        return $this->hasMany(Tache::class);
+        return $this->belongsToMany(Tache::class, 'pivots');
     }
 }

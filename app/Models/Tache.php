@@ -8,8 +8,8 @@ class Tache extends Model
 {
     protected $fillable = ["nom", "filtre_id"];
 
-    // Un tâche 'appartient' à un seul filtre (elle n'en a qu'un)
-    public function filtre(){
-        return $this->belongsTo(Filtre::class);
+    // Un tâche peut appartenir à deux filtres différents (un ou 2)
+    public function filtres(){
+        return $this->belongsToMany(Filtre::class, 'pivots');
     }
 }
