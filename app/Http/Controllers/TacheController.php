@@ -20,13 +20,19 @@ class TacheController extends Controller
         // unchecked = 0 (active) ; checked = 1 (terminée)
         $tache->checked =$request->boolean('checked');
 
-
         // on sauve la tâche avant d'établir la relation many 2 many (car la fonction attach a besoin de l'id de la tâche)
         $tache->save();
 
-        // on va donc utiliser la fonction attach() pour attribuer automatiquement les filtres_id 1 et 2.
+        // on va donc utiliser la fonction attach() pour attribuer les filtres_id correspondants
         // cette fonction permet d'associer des données dans une relation many 2 many
-        $tache->filtres()->attach([1,2]);
+        // avec une condition pour donc attribuer les filtres corrects : actives (1 et 2) et terminées (1 et 3)
+
+        if ($request->boolean('checked') = 0) {
+            $tache->filtres()->attach([1,2]);
+        }
+        else {
+            $tache->filtres()->attach([1,3]);
+        };
 
         return redirect('/')->with('success', 'Nouvelle tâche ajoutée avec succès !');
 
@@ -39,11 +45,19 @@ class TacheController extends Controller
         $tache = Tache::find($id)->first();
 
         $tache->nom = $request->nom;
+        // idem pour la logiquement checkbox
+        $tache->checked =$request->boolean('checked');
 
+        if ($request->boolean('checked') = 0) {
+            $tache->filtres()->attach([1,2]);
+        }
+        else {
+            $tache->filtres()->attach([1,3]);
+        };
+
+        // il y a déjà une id associée à la tâche donc on peut mettre le update() à la fin
         $tache->update();
 
-        // condition liée au fait que le input soit checked ou pas
-
-        $tache->filtres()->attach([1,2]);
+        return redirect("/")->with('success', 'Tâche modifiée avec succès !');
     }
 }
