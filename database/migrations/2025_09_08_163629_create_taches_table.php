@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('taches', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->foreignId('filtre_id')->constrained('filtres')->onDelete('cascade');
+            $table->string(column: 'nom');
+            // je mets une valeur par défaut au boolean au cas où, pour éviter les bugs
+            $table->boolean('checked')->default(0);
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tache extends Model
 {
-    protected $fillable = ["nom", "filtre_id"];
+    protected $fillable = ["nom", "checked"];
 
     // Un tâche peut appartenir à deux filtres différents (un ou 2)
     public function filtres(){
