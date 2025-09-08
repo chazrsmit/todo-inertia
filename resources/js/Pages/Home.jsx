@@ -1,6 +1,11 @@
 import { router } from "@inertiajs/react";
+import { useState } from "react";
 
-export default function Home({ taches, taches_not_done, csrf_token }){
+export default function Home({ taches, taches_not_done, taches_done, csrf_token }){
+
+    // pour gérer les filtres
+    const [filtreActif, setFiltreActif] = useState('toutes');
+    // par défaut on affiche tout
 
     // vu sur Claude:
        const handleCheckboxChange = (tacheId, isCurrentlyChecked) => {
@@ -10,6 +15,20 @@ export default function Home({ taches, taches_not_done, csrf_token }){
             _token: csrf_token
         });
     };
+
+    // fonction sur laquelle on va mapper pour afficher les tâches en fonction du choix du filtre:
+
+    const TachesAffichees = () => {
+        // switch case
+        switch (filtreActif) {
+            case 'actives' :
+                return taches_not_done;
+            case 'terminées' :
+                return taches_done;
+            default :
+                return taches;
+        }
+    }
 
     return(
         <>
@@ -30,7 +49,7 @@ export default function Home({ taches, taches_not_done, csrf_token }){
 
                 {/* Liste des tâches */}
                 <div className="border">
-                    {taches.map(tache => (
+                    {TachesAffichees().map(tache => (
                         <div key={tache.id} className="d-flex gap-3">
                             <input type="checkbox"
                             name=""
@@ -55,11 +74,16 @@ export default function Home({ taches, taches_not_done, csrf_token }){
                             </div>
                         </div>
                     ))}
-                    {/* Comptage nombre de tâches qui ne sont pas encore checked (checked == 0)  */}
 
-                    
+                    {/* Affichage nombre de tâches qui ne sont pas encore checked (checked == 0)  */}
+
+                    <p>{taches_not_done.length}</p>
 
                     {/* Filtres */}
+                    {/* Input radio -> si un des liens est 'checked', alors il y aura un mapping spécifique. */}
+                    <button onClick={() => setFiltreActif('toutes')}>Toutes</button>
+                    <button onClick={() => setFiltreActif('actives')}>Actives</button>
+                    <button onClick={() => setFiltreActif('terminées')}>Terminées</button>
 
                     {/* Remettre toutes les tâches à checked == 0 */}
                 </div>

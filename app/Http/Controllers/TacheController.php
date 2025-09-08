@@ -13,9 +13,12 @@ class TacheController extends Controller
         $taches = Tache::with('filtres')->get();
         // on récupère les tâches pas encore finies
         $taches_not_done = Tache::where('checked', 0)->get();
+        // idem pour les finies
+        $taches_done = Tache::where('checked', 1)->get();
         return Inertia::render('Home', [
             'taches' => $taches,
             'taches_not_done' => $taches_not_done,
+            'taches_done' => $taches_done,
             'csrf_token' => csrf_token()
         ]);
     }
