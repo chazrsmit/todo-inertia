@@ -20,7 +20,6 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
     };
 
     // fonction sur laquelle on va mapper pour afficher les tâches en fonction du choix du filtre:
-
     const TachesAffichees = () => {
         // switch case
         switch (filtreActif) {
@@ -33,7 +32,7 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
         }
     }
 
-    return(
+    return (
         <div className="app-container">
             <div className="box">
 
@@ -93,27 +92,9 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
 
                             {/* Filtres */}
                             <div className="filter-buttons">
-                                <button 
-                                    type="button"
-                                    className={`filter-btn ${filtreActif === 'toutes' ? 'active' : ''}`}
-                                    onClick={() => setFiltreActif('toutes')}
-                                >
-                                    Toutes
-                                </button>
-                                <button 
-                                    type="button"
-                                    className={`filter-btn ${filtreActif === 'actives' ? 'active' : ''}`}
-                                    onClick={() => setFiltreActif('actives')}
-                                >
-                                    Actives
-                                </button>
-                                <button 
-                                    type="button"
-                                    className={`filter-btn ${filtreActif === 'terminées' ? 'active' : ''}`}
-                                    onClick={() => setFiltreActif('terminées')}
-                                >
-                                    Terminées
-                                </button>
+                                <button type="button" className={`filter-btn ${filtreActif === 'toutes' ? 'active' : ''}`} onClick={() => setFiltreActif('toutes')}>Toutes</button>
+                                <button type="button" className={`filter-btn ${filtreActif === 'actives' ? 'active' : ''}`} onClick={() => setFiltreActif('actives')}>Actives</button>
+                                <button type="button" className={`filter-btn ${filtreActif === 'terminées' ? 'active' : ''}`} onClick={() => setFiltreActif('terminées')}>Terminées</button>
                             </div>
                         </div>
 
@@ -123,9 +104,7 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
                                 <form action="tache/destroy" method="POST">
                                     <input type="hidden" name="_method" value="DELETE" />
                                     <input type="hidden" name="_token" value={csrf_token} />
-                                    <button type="submit" className="clear-btn">
-                                        Clear les tâches terminées
-                                    </button>
+                                    <button type="submit" className="clear-btn">Clear les tâches terminées</button>
                                 </form>
                             </div>
                         )}
