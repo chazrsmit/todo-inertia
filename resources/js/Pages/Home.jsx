@@ -34,67 +34,106 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
     }
 
     return(
-        <>
-            <h1 className="container">To do</h1>
-
-            <div className="border container">
+        <div className="app-container">
+            <div className="box">
 
                 {/* Nouvelle tâche  */}
-                <div className="border">
-                    <form action="/tache/add" method="POST">
+                <div className="new">
+                    <form action="/tache/add" method="POST" className="new-task-form">
                         {/* Ajouter un e.prevent default */}
                         <input type="hidden" name="_token" value={csrf_token} />
-                        <input type="checkbox" name="checked" id="" />
-                        <input type="text" name="nom" id="" placeholder="Ajouter une nouvelle tâche" />
-                        <button type="submit">Add</button>
+                        <input 
+                            type="checkbox" 
+                            name="checked" 
+                            className="task-checkbox" 
+                        />
+                        <input 
+                            type="text" 
+                            name="nom" 
+                            className="task-input" 
+                            placeholder="Ajouter une nouvelle tâche"
+                        />
+                        <button type="submit" className="add-button">+</button>
                     </form>
                 </div>
 
                 {/* Liste des tâches */}
-                <div className="border">
-                    
-                {TachesAffichees().length > 0 ? (
-                    TachesAffichees().map(tache => (
-                        <div key={tache.id} className="d-flex gap-3">
-                            <input type="checkbox"
-                            name=""
-                            id=""
-                            checked={tache.checked === 1}
-                            onChange={() => handleCheckboxChange(tache.id, tache.checked === 1)} 
-                            // on envoit dans la fonction l'id de la tâche, ainsi qu'un true ou false (si de base c'était pas checked, on va envoyer un false; l'inverse si c'était dejà checked)
-                            />
-                            <p>{tache.nom}</p>
+                <div className="list">
+                    <div className="tasks-container">
+                        {TachesAffichees().length > 0 ? (
+                            TachesAffichees().map(tache => (
+                                <div key={tache.id} className="task-item">
+                                    <input 
+                                        type="checkbox"
+                                        className="task-checkbox"
+                                        checked={tache.checked === 1}
+                                        onChange={() => handleCheckboxChange(tache.id, tache.checked === 1)} 
+                                        // on envoit dans la fonction l'id de la tâche, ainsi qu'un true ou false (si de base c'était pas checked, on va envoyer un false; l'inverse si c'était dejà checked)
+                                    />
+                                    <p className={`task-text ${tache.checked === 1 ? 'completed' : ''}`}>
+                                        {tache.nom}
+                                    </p>
+                                </div>
+                            ))) : (
+                                <div className="no-tasks">
+                                    <p>Pas de tâches à afficher.</p>
+                                </div>
+                            )
+                        }
+                    </div>
+
+                    {/* Footer section */}
+                    <div className="list-footer">
+                        
+                        {/* Compteur de tâches */}
+                        <div className="footer-content">
+                            <p className="task-counter">
+                                {taches_not_done.length} tâche{taches_not_done.length !== 1 ? 's' : ''} à encore effectuer.
+                            </p>
+
+                            {/* Filtres */}
+                            <div className="filter-buttons">
+                                <button 
+                                    type="button"
+                                    className={`filter-btn ${filtreActif === 'toutes' ? 'active' : ''}`}
+                                    onClick={() => setFiltreActif('toutes')}
+                                >
+                                    Toutes
+                                </button>
+                                <button 
+                                    type="button"
+                                    className={`filter-btn ${filtreActif === 'actives' ? 'active' : ''}`}
+                                    onClick={() => setFiltreActif('actives')}
+                                >
+                                    Actives
+                                </button>
+                                <button 
+                                    type="button"
+                                    className={`filter-btn ${filtreActif === 'terminées' ? 'active' : ''}`}
+                                    onClick={() => setFiltreActif('terminées')}
+                                >
+                                    Terminées
+                                </button>
+                            </div>
                         </div>
-                    ))) : "Pas de tâches à afficher."
-                }
 
-                <div className="d-flex gap-3">
-                    {/* Affichage nombre de tâches qui ne sont pas encore checked (checked == 0)  */}
+                        {/* Supprimer toutes les tâches dont checked == 1 */}
+                        {taches_done.length > 0 && (
+                            <div className="clear-section">
+                                <form action="tache/destroy" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <input type="hidden" name="_token" value={csrf_token} />
+                                    <button type="submit" className="clear-btn">
+                                        Clear les tâches terminées
+                                    </button>
+                                </form>
+                            </div>
+                        )}
 
-                    <p>{taches_not_done.length} tâches à encore effectuer.</p>
-
-                    {/* Filtres */}
-                    <div>
-                        <button onClick={() => setFiltreActif('toutes')}>Toutes</button>
-                        <button onClick={() => setFiltreActif('actives')}>Actives</button>
-                        <button onClick={() => setFiltreActif('terminées')}>Terminées</button>
                     </div>
-
-                    {/* Suppriemr toutes les tâches dont checked == 1 */}
-                    <div>
-                        <form action="tache/destroy" method="POST">
-                            <input type="hidden" name="_method" value="DELETE" />
-                            <input type="hidden" name="_token" value={csrf_token} />
-                            <button type="submit">Clear les tâches terminées</button>
-                        </form>
-                    </div>
-
-                </div>    
-
                 </div>
 
-
             </div>
-        </>
+        </div>
     )
 }
