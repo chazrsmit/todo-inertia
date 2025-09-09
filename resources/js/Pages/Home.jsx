@@ -8,10 +8,10 @@ export default function Home({ taches, taches_not_done, taches_done, csrf_token 
     // par défaut on affiche tout
 
     // vu sur Claude:
-    const handleCheckboxChange = (tacheId, isCurrentlyChecked) => {
+    const handleCheckboxChange = (tacheId, isChecked) => {
         // envoyer les infos dans le backend
         router.put(`/tache/update/${tacheId}`, {
-            checked: !isCurrentlyChecked,
+            checked: !isChecked,
             // cette ligne ci-dessus dis que le checked va prendre l'INVERSE de l'état initial de la checkbox;
             // si la box n'était pas checked de base, on envoit un false, ce qui done : checked: !false = true
             // la tâche devient donc tache.checked === 1
