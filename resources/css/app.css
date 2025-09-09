@@ -42,7 +42,11 @@ body, html {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    padding: 1rem;
+
+}
+
+.new {
+    padding: 1.5rem;
 }
 
 .list {
@@ -117,35 +121,37 @@ body, html {
     flex-direction: column;
     gap: 0.5rem;
 
-    /* Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-/* WebKit scrollbar */
+/* Cacher complètement la scrollbar (Webkit) */
 .tasks-container::-webkit-scrollbar {
-    width: 8px;
+    display: none;
 }
 
-.tasks-container::-webkit-scrollbar-track {
-    background: transparent;
+/* Cacher complètement la scrollbar (Firefox) */
+.tasks-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge */
 }
 
-.tasks-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    transition: background 0.3s ease;
-}
-
-.tasks-container::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.6);
-}
 
 .task-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease, background 0.2s ease;
+
+
+}
+
+.task-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.45);
 }
 
 .task-text {
@@ -154,6 +160,10 @@ body, html {
     font-size: 1rem;
     color: #333;
     word-break: break-word;
+}
+
+.task-checkbox {
+    flex-shrink: 0;
 }
 
 .task-text.completed {
@@ -306,7 +316,7 @@ body, html {
     
     .new-task-form {
         gap: 0.75rem;
-        padding: 0.75rem;
+        padding: 0.75rem 1rem;
     }
     
     .task-input {
